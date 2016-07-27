@@ -12,7 +12,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.bdlions.sampanit.recharge.Login"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +21,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.RechargeMenu"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.RechargeMenu" />
 
@@ -32,8 +30,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.bKash"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.bKash" />
 
@@ -42,8 +39,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.History"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.History" />
 
@@ -52,8 +48,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.bKashHistory"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.bKashHistory" />
 
@@ -62,8 +57,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.TopUpHistory"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.TopUpHistory" />
 
@@ -72,8 +66,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.TopUp"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.TopUp" />
 
@@ -82,8 +75,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.DBBL"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.DBBL" />
 
@@ -92,8 +84,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.mCash"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.mCash" />
 
@@ -102,8 +93,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.UCash"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.UCash" />
 
@@ -112,8 +102,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.DBBLHistory"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.DBBLHistory" />
 
@@ -122,8 +111,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.mCashHistory"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.mCashHistory" />
 
@@ -132,8 +120,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.UCashHistory"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.UCashHistory" />
 
@@ -142,8 +129,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.CreateReseller"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.CreateReseller" />
 
@@ -152,8 +138,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.Payment"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.Payment" />
 
@@ -162,8 +147,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.ChangePassword"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.ChangePassword" />
 
@@ -172,8 +156,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.Reseller"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.Reseller" />
 
@@ -182,8 +165,7 @@
         </activity>
         <activity
             android:name="com.bdlions.sampanit.recharge.Account"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="com.badlions.sampanit.recharge.Account" />
 

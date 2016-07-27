@@ -77,8 +77,8 @@ public class RechargeMenu extends AppCompatActivity {
 
         grid_services.add("History");
         grid_image.add( R.drawable.history);
-        grid_services.add("Reseller");
-        grid_image.add( R.drawable.reseller);
+//        grid_services.add("Reseller");
+//        grid_image.add( R.drawable.reseller);
         grid_services.add("Account");
         grid_image.add( R.drawable.account);
 
@@ -142,15 +142,15 @@ public class RechargeMenu extends AppCompatActivity {
                         startActivity(intentHistory);
                         break;
 
-                    case 6:
-                        Intent intentReseller = new Intent(getBaseContext(), Reseller.class);
-                        intentReseller.putExtra("USER_INFO", strUserInfo);
-                        intentReseller.putExtra("SESSION_ID", sessionId);
-                        intentReseller.putExtra("BASE_URL", baseUrl);
-                        startActivity(intentReseller);
-                        break;
+//                    case 6:
+//                        Intent intentReseller = new Intent(getBaseContext(), Reseller.class);
+//                        intentReseller.putExtra("USER_INFO", strUserInfo);
+//                        intentReseller.putExtra("SESSION_ID", sessionId);
+//                        intentReseller.putExtra("BASE_URL", baseUrl);
+//                        startActivity(intentReseller);
+//                        break;
 
-                    case 7:
+                    case 6:
                         Intent intentAccount = new Intent(getBaseContext(), Account.class);
                         intentAccount.putExtra("BASE_URL", baseUrl);
                         intentAccount.putExtra("USER_INFO", strUserInfo);

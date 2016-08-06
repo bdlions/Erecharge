@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bdlions.sampanit.database.DatabaseHelper;
+import com.bdlions.sampanit.database.Utils;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -30,6 +33,7 @@ public class Login extends AppCompatActivity {
     private static EditText etOPCode, etLoginUserName, etPassword;
     private static String baseUrl = "";
     private static Button buttonLogin;
+    private static DatabaseHelper eRchargeDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,11 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        eRchargeDB = DatabaseHelper.getInstance(this);
+
+
+
+
 
         etOPCode = (EditText) findViewById(R.id.etOPCode);
         etLoginUserName = (EditText) findViewById(R.id.etLoginUserName);
@@ -52,6 +61,7 @@ public class Login extends AppCompatActivity {
                     public void onClick(View v) {
                         try
                         {
+
                             final ProgressDialog progressInit = new ProgressDialog(Login.this);
                             progressInit.setTitle("Login");
                             progressInit.setMessage("Authenticating user...");
@@ -136,6 +146,12 @@ public class Login extends AppCompatActivity {
                                                                     String message = (String) resultEvent.get("message");
                                                                     if(responseCode == 2000){
                                                                         JSONObject jsonResultEvent = (JSONObject) resultEvent.get("result_event");
+
+                                                                        String tempuserId =   jsonResultEvent.get("user_id").toString();
+                                                                        Utils utils = new Utils();
+                                                                        String  hashPassword =  utils.computeSHAHash(etPassword.getText().toString());
+                                                                        boolean localResponse = eRchargeDB.createUser(tempuserId, etLoginUserName.getText().toString(), hashPassword, etOPCode.getText().toString());
+
                                                                         Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
                                                                         intent.putExtra("BASE_URL", baseUrl);
                                                                         intent.putExtra("USER_INFO", jsonResultEvent.get("user_info").toString());

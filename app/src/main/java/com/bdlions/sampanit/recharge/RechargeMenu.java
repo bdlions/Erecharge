@@ -1,13 +1,7 @@
 package com.bdlions.sampanit.recharge;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,22 +9,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bdlions.sampanit.database.DatabaseHelper;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +20,7 @@ public class RechargeMenu extends AppCompatActivity {
     private static int userId = 0;
     private static int localUserId = 0;
     private static String sessionId = "";
-    private static TextView userName, currentBalance;
+    public static TextView userName, currentBalance;
     UserInfo userInfo = new UserInfo();
     private boolean topUpFlag = false;
     private  int[] serviceList;
@@ -59,8 +40,7 @@ public class RechargeMenu extends AppCompatActivity {
 
         userName = (TextView)findViewById(R.id.userName);
         currentBalance = (TextView)findViewById(R.id.currentBalance);
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
         eRchargeDB = DatabaseHelper.getInstance(this);
         Bundle extras = getIntent().getExtras();
 
@@ -86,17 +66,7 @@ public class RechargeMenu extends AppCompatActivity {
                 //handle the exception here
             }
 
-       }else if(netInfo != null && netInfo.isConnected()){
-            JSONObject localUserInfo =  eRchargeDB.getUserInfo();
-            try {
-                localUserId = (int) localUserInfo.get("userId");
-                baseUrl = (String) localUserInfo.get("baseUrl");
-                sessionId = (String) localUserInfo.get("sessionId");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            getUserInfo();
-        }else{
+       }else{
             JSONObject localUserInfo =  eRchargeDB.getUserInfo();
               serviceList = new int[]{};
             try {
@@ -112,130 +82,11 @@ public class RechargeMenu extends AppCompatActivity {
 
 
 
-    public void getUserInfo(){
-        try
-        {
-            final ProgressDialog progress = new ProgressDialog(RechargeMenu.this);
-            progress.setTitle("Connecting");
-            progress.setMessage("Connecting to server ...");
-            progress.show();
-            Thread bkashThread = new Thread() {
-                @Override
-                public void run()
-                {
-                    try
-                    {
-                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                        StrictMode.setThreadPolicy(policy);
-                        HttpClient client = new DefaultHttpClient();
-                        HttpPost post = new HttpPost(baseUrl + "androidapp/auth/get_user_basic_info");
-                        List<NameValuePair> nameValuePairs = new ArrayList<>();
-                        nameValuePairs.add(new BasicNameValuePair("user_id", localUserId+""));
-                        nameValuePairs.add(new BasicNameValuePair("session_id", sessionId +""));
-                        post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                        HttpResponse response = client.execute(post);
-                        BufferedReader rd = new BufferedReader
-                                (new InputStreamReader(response.getEntity().getContent()));
-                        String result = "";
-                        String line = "";
-                        while ((line = rd.readLine()) != null) {
-                            result += line;
-                        }
-                        if(result != null) {
-                            JSONObject resultEvent = new JSONObject(result.toString());
-
-                            int responseCode = 0;
-                            try
-                            {
-                                responseCode = (int)resultEvent.get("response_code");
-                            }
-                            catch(Exception ex)
-                            {
-                                progress.dismiss();
-                                runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        Toast.makeText(getBaseContext(), "Invalid response from the server.", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                            if(responseCode == 2000){
-                                try
-                                {
-                                    JSONObject jsonResultEvent = (JSONObject) resultEvent.get("result_event");
-
-                                    currentBalance.setText(jsonResultEvent.get("current_balance").toString());
-                                    sessionId = jsonResultEvent.get("session_id").toString();
-                                    String tempUserInfo = jsonResultEvent.get("user_info").toString();
-                                    JSONObject jsonUserInfo  = new JSONObject(tempUserInfo);
-                                    userInfo.setFirstName((String) jsonUserInfo.get("first_name"));
-                                    userInfo.setLastName((String) jsonUserInfo.get("last_name"));
-                                    userInfo.setUserId(Integer.parseInt((String) jsonUserInfo.get("user_id")));
-                                    userId = Integer.parseInt((String) jsonUserInfo.get("user_id"));
-                                    String UserName = userInfo.getFirstName() +" "+   userInfo.getLastName();
-                                    userName.setText(UserName);
-                                    //getting service id list
-                                    JSONArray serviceIdList = jsonResultEvent.getJSONArray("service_id_list");
-                                    serviceList = new int[serviceIdList.length()];
-                                    for (int i = 0; i < serviceIdList.length(); i++)
-                                    {
-                                        int serviceId = (int)serviceIdList.get(i);
-                                        serviceList[i] = serviceId;
-                                    }
-
-                                    genarateServiceOptions();
-
-                                }
-                                catch(Exception ex)
-                                {
-                                    progress.dismiss();
-                                    runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            Toast.makeText(getBaseContext(), "Invalid response from the server..", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-
-                            }
-                        }
-                        else
-                        {
-                            progress.dismiss();
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    Toast.makeText(getBaseContext(), "Invalid response from the server...", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }
-                    catch (Exception ex) {
-                        progress.dismiss();
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText(getBaseContext(), "Check your internet connection.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    progress.dismiss();
-                }
-            };
-            bkashThread.start();
-        }
-        catch (Exception ex){
-            Toast.makeText(getApplicationContext(), "Internal server error.", Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
 
 
     public void genarateServiceOptions(){
-
-
         List<String> grid_services = new ArrayList<String>();
-
         List<Integer> grid_image = new ArrayList<Integer>();
-
-
         for (int i = 0; i < serviceList.length; i++) {
             if(serviceList[i] == Constants.SERVICE_TYPE_ID_BKASH_CASHIN){
                 grid_services.add("bKash");

@@ -90,6 +90,8 @@ public class RechargeMenu extends AppCompatActivity {
             JSONObject localUserInfo =  eRchargeDB.getUserInfo();
             try {
                 localUserId = (int) localUserInfo.get("userId");
+                baseUrl = (String) localUserInfo.get("baseUrl");
+                sessionId = (String) localUserInfo.get("sessionId");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -104,10 +106,7 @@ public class RechargeMenu extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
-
-
 
     }
 
@@ -129,10 +128,10 @@ public class RechargeMenu extends AppCompatActivity {
                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                         StrictMode.setThreadPolicy(policy);
                         HttpClient client = new DefaultHttpClient();
-                        HttpPost post = new HttpPost(" http://122.144.10.249/rechargeserver/androidapp/transaction/get_user_basic_info");
-
+                        HttpPost post = new HttpPost(baseUrl + "androidapp/auth/get_user_basic_info");
                         List<NameValuePair> nameValuePairs = new ArrayList<>();
                         nameValuePairs.add(new BasicNameValuePair("user_id", localUserId+""));
+                        nameValuePairs.add(new BasicNameValuePair("session_id", sessionId +""));
                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         HttpResponse response = client.execute(post);
                         BufferedReader rd = new BufferedReader

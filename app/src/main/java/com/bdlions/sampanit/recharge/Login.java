@@ -48,8 +48,7 @@ public class Login extends AppCompatActivity {
 
         eRchargeDB = DatabaseHelper.getInstance(this);
 
-
-       if(eRchargeDB.checkLogin() != false){
+        if(eRchargeDB.checkLogin() != false){
             Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
             startActivity(intent);
             finish();
@@ -65,6 +64,7 @@ public class Login extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         try
                         {
 
@@ -158,9 +158,11 @@ public class Login extends AppCompatActivity {
                                                                         String  hashPassword =  utils.computeSHAHash(etPassword.getText().toString());
                                                                         String tempUserInfo = jsonResultEvent.get("user_info").toString();
                                                                         JSONObject jsonUserInfo  = new JSONObject(tempUserInfo);
-                                                                        Integer.parseInt((String) jsonUserInfo.get("user_id"));
-                                                                        int tempuserId =    Integer.parseInt(jsonResultEvent.get("user_id").toString());
-                                                                        boolean localResponse = eRchargeDB.createUser(tempuserId, etLoginUserName.getText().toString(), hashPassword, etOPCode.getText().toString(), baseUrl);
+                                                                        int tempUserId =    Integer.parseInt(jsonUserInfo.get("user_id").toString());
+                                                                        String sessionId = jsonResultEvent.get("session_id").toString();
+                                                                        boolean localResponse = eRchargeDB.createUser(tempUserId, etLoginUserName.getText().toString(), hashPassword, etOPCode.getText().toString(), baseUrl, sessionId);
+
+
                                                                         Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
                                                                         intent.putExtra("BASE_URL", baseUrl);
                                                                         intent.putExtra("USER_INFO", tempUserInfo);

@@ -39,13 +39,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     }
-    public boolean createUser(int userId, String userNmae, String password, String opcode, String baseUrl){
+    public boolean createUser(int userId, String userNmae, String password, String opcode, String baseUrl, String sessionId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(QueryField.USER_ID,userId);
+        contentValues.put(QueryField.SESSION_ID, sessionId);
         contentValues.put(QueryField.USER_NMAE,userNmae);
-        contentValues.put(QueryField.PASSWORD,password);
+        contentValues.put(QueryField.BASE_URL,baseUrl);
         contentValues.put(QueryField.OP_CODE,opcode);
+        contentValues.put(QueryField.PASSWORD,password);
         long result = db.insert(QueryField.TABLE_USERS, null, contentValues);
         db.close();
         if(result == -1)
@@ -69,8 +71,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 try {
                     userInfo.put("userId", cursor.getInt(1));
-                    userInfo.put("userName", cursor.getString(2));
-                    userInfo.put("opCode", cursor.getString(3));
+                    userInfo.put("sessionId", cursor.getString(2));
+                    userInfo.put("userName", cursor.getString(3));
+                    userInfo.put("baseUrl", cursor.getString(4));
+                    userInfo.put("opCode", cursor.getString(5));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

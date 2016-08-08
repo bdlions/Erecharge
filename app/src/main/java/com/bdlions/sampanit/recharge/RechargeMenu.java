@@ -26,6 +26,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -36,12 +37,12 @@ import java.util.List;
 public class RechargeMenu extends AppCompatActivity {
     private static String baseUrl = "";
     private static int userId = 0;
-    private static String localUserId = "";
+    private static int localUserId = 0;
     private static String sessionId = "";
     private static TextView userName, currentBalance;
     UserInfo userInfo = new UserInfo();
     private boolean topUpFlag = false;
-    private  int[] service_list;
+    private  int[] serviceList;
     GridView grid;
     private String strUserInfo;
     List<Integer> history_services = new ArrayList<Integer>();
@@ -55,12 +56,16 @@ public class RechargeMenu extends AppCompatActivity {
         setContentView(R.layout.activity_recharge_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        userName = (TextView)findViewById(R.id.userName);
+        currentBalance = (TextView)findViewById(R.id.currentBalance);
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         eRchargeDB = DatabaseHelper.getInstance(this);
         Bundle extras = getIntent().getExtras();
+
         if (extras != null) {
-            service_list = getIntent().getExtras().getIntArray("service_list");
+            serviceList = getIntent().getExtras().getIntArray("service_list");
             genarateServiceOptions();
             baseUrl = getIntent().getExtras().getString("BASE_URL");
             currentBalance.setText(getIntent().getExtras().getString("CURRENT_BALANCE"));
@@ -81,19 +86,25 @@ public class RechargeMenu extends AppCompatActivity {
                 //handle the exception here
             }
 
-        }else if(netInfo != null && netInfo.isConnected()){
-            Cursor cursor =  eRchargeDB.getUserInfo();
-            while (cursor.moveToFirst()){
-                localUserId = cursor.getString(1);
+       }else if(netInfo != null && netInfo.isConnected()){
+            JSONObject localUserInfo =  eRchargeDB.getUserInfo();
+            try {
+                localUserId = (int) localUserInfo.get("userId");
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             getUserInfo();
         }else{
-        Cursor cursor =  eRchargeDB.getUserInfo();
-            while (cursor.moveToFirst()){
-              String tempuserName = cursor.getString(2);
-               userName.setText(tempuserName);
-
+            JSONObject localUserInfo =  eRchargeDB.getUserInfo();
+              serviceList = new int[]{};
+            try {
+                String localUserName= (String) localUserInfo.get("userName");
+                userName.setText(localUserName);
+                genarateServiceOptions();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }
 
 
@@ -165,7 +176,7 @@ public class RechargeMenu extends AppCompatActivity {
                                     userName.setText(UserName);
                                     //getting service id list
                                     JSONArray serviceIdList = jsonResultEvent.getJSONArray("service_id_list");
-                                    int[] serviceList = new int[serviceIdList.length()];
+                                    serviceList = new int[serviceIdList.length()];
                                     for (int i = 0; i < serviceIdList.length(); i++)
                                     {
                                         int serviceId = (int)serviceIdList.get(i);
@@ -226,28 +237,28 @@ public class RechargeMenu extends AppCompatActivity {
         List<Integer> grid_image = new ArrayList<Integer>();
 
 
-        for (int i = 0; i < service_list.length; i++) {
-            if(service_list[i] == Constants.SERVICE_TYPE_ID_BKASH_CASHIN){
+        for (int i = 0; i < serviceList.length; i++) {
+            if(serviceList[i] == Constants.SERVICE_TYPE_ID_BKASH_CASHIN){
                 grid_services.add("bKash");
                 grid_image.add( R.drawable.bkash);
                 history_services.add(Constants.SERVICE_TYPE_ID_BKASH_CASHIN);
-            } else if(service_list[i] == Constants.SERVICE_TYPE_ID_DBBL_CASHIN){
+            } else if(serviceList[i] == Constants.SERVICE_TYPE_ID_DBBL_CASHIN){
                 grid_services.add("DBBL");
                 grid_image.add( R.drawable.dbbl);
                 history_services.add(Constants.SERVICE_TYPE_ID_DBBL_CASHIN);
-            } else if(service_list[i] == Constants.SERVICE_TYPE_ID_MCASH_CASHIN){
+            } else if(serviceList[i] == Constants.SERVICE_TYPE_ID_MCASH_CASHIN){
                 grid_services.add("mCash");
                 grid_image.add( R.drawable.mcash);
                 history_services.add(Constants.SERVICE_TYPE_ID_MCASH_CASHIN);
-            }  else if(service_list[i] == Constants.SERVICE_TYPE_ID_UCASH_CASHIN){
+            }  else if(serviceList[i] == Constants.SERVICE_TYPE_ID_UCASH_CASHIN){
                 grid_services.add("UCash");
                 grid_image.add( R.drawable.ucash);
                 history_services.add(Constants.SERVICE_TYPE_ID_UCASH_CASHIN);
-            }  else if(service_list[i] == Constants.SERVICE_TYPE_ID_TOPUP_GP
-                    || service_list[i] == Constants.SERVICE_TYPE_ID_TOPUP_AIRTEL
-                    ||  service_list[i] == Constants.SERVICE_TYPE_ID_TOPUP_BANGLALINK
-                    ||  service_list[i] == Constants.SERVICE_TYPE_ID_TOPUP_ROBI
-                    ||  service_list[i] == Constants.SERVICE_TYPE_ID_TOPUP_TELETALK){
+            }  else if(serviceList[i] == Constants.SERVICE_TYPE_ID_TOPUP_GP
+                    || serviceList[i] == Constants.SERVICE_TYPE_ID_TOPUP_AIRTEL
+                    ||  serviceList[i] == Constants.SERVICE_TYPE_ID_TOPUP_BANGLALINK
+                    ||  serviceList[i] == Constants.SERVICE_TYPE_ID_TOPUP_ROBI
+                    ||  serviceList[i] == Constants.SERVICE_TYPE_ID_TOPUP_TELETALK){
                 topUpFlag = true;
             }
         }
@@ -262,12 +273,6 @@ public class RechargeMenu extends AppCompatActivity {
         grid_image.add( R.drawable.history);
         grid_services.add("Account");
         grid_image.add( R.drawable.account);
-
-
-        userName = (TextView)findViewById(R.id.userName);
-        currentBalance = (TextView)findViewById(R.id.currentBalance);
-
-
         CustomGrid adapter = new CustomGrid(RechargeMenu.this, grid_services, grid_image);
         grid=(GridView)findViewById(R.id.list);
         grid.setAdapter(adapter);
@@ -338,13 +343,6 @@ public class RechargeMenu extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
-
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

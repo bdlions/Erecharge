@@ -38,18 +38,24 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        eRchargeDB = DatabaseHelper.getInstance(this);
-
-
-
-
-
         etOPCode = (EditText) findViewById(R.id.etOPCode);
         etLoginUserName = (EditText) findViewById(R.id.etLoginUserName);
         etPassword = (EditText) findViewById(R.id.etPassword);
+
+        eRchargeDB = DatabaseHelper.getInstance(this);
+
+
+       if(eRchargeDB.checkLogin() != false){
+            Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
+            startActivity(intent);
+            finish();
+        }
+
+
         onClickButtonLoginListener();
 
     }
@@ -147,14 +153,17 @@ public class Login extends AppCompatActivity {
                                                                     if(responseCode == 2000){
                                                                         JSONObject jsonResultEvent = (JSONObject) resultEvent.get("result_event");
 
-                                                                        String tempuserId =   jsonResultEvent.get("user_id").toString();
+
                                                                         Utils utils = new Utils();
                                                                         String  hashPassword =  utils.computeSHAHash(etPassword.getText().toString());
-                                                                        boolean localResponse = eRchargeDB.createUser(tempuserId, etLoginUserName.getText().toString(), hashPassword, etOPCode.getText().toString());
-
+                                                                        String tempUserInfo = jsonResultEvent.get("user_info").toString();
+                                                                        JSONObject jsonUserInfo  = new JSONObject(tempUserInfo);
+                                                                        Integer.parseInt((String) jsonUserInfo.get("user_id"));
+                                                                        int tempuserId =    Integer.parseInt(jsonResultEvent.get("user_id").toString());
+                                                                        boolean localResponse = eRchargeDB.createUser(tempuserId, etLoginUserName.getText().toString(), hashPassword, etOPCode.getText().toString(), baseUrl);
                                                                         Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
                                                                         intent.putExtra("BASE_URL", baseUrl);
-                                                                        intent.putExtra("USER_INFO", jsonResultEvent.get("user_info").toString());
+                                                                        intent.putExtra("USER_INFO", tempUserInfo);
                                                                         intent.putExtra("CURRENT_BALANCE", jsonResultEvent.get("current_balance").toString());
                                                                         intent.putExtra("SESSION_ID", jsonResultEvent.get("session_id").toString());
                                                                         //getting service id list

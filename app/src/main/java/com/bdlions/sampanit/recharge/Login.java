@@ -303,31 +303,20 @@ public class Login extends AppCompatActivity {
                                                                         boolean localResponse = eRchargeDB.createUser(tempUserId, etLoginUserName.getText().toString(), hashPassword, etOPCode.getText().toString(), baseUrl, sessionId);
 
 
-                                                                        Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
+                                                                        Intent intent = new Intent(getBaseContext(), PinCode.class);
                                                                         intent.putExtra("BASE_URL", baseUrl);
-                                                                        intent.putExtra("USER_INFO", tempUserInfo);
-                                                                        intent.putExtra("CURRENT_BALANCE", jsonResultEvent.get("current_balance").toString());
-                                                                        intent.putExtra("SESSION_ID", jsonResultEvent.get("session_id").toString());
+                                                                        intent.putExtra("USER_ID", tempUserId);
+                                                                        //intent.putExtra("CURRENT_BALANCE", jsonResultEvent.get("current_balance").toString());
+                                                                        intent.putExtra("SESSION_ID", sessionId);
                                                                         //getting service id list
-                                                                        JSONArray serviceIdList = jsonResultEvent.getJSONArray("service_id_list");
+                                                                        /*JSONArray serviceIdList = jsonResultEvent.getJSONArray("service_id_list");
                                                                         int[] serviceList = new int[serviceIdList.length()];
                                                                         for (int i = 0; i < serviceIdList.length(); i++)
                                                                         {
                                                                             int serviceId = (int)serviceIdList.get(i);
                                                                             serviceList[i] = serviceId;
                                                                         }
-                                                                        /*int[] service_list = {
-                                                                                Constants.SERVICE_TYPE_ID_BKASH_CASHIN,
-                                                                                Constants.SERVICE_TYPE_ID_DBBL_CASHIN,
-                                                                                Constants.SERVICE_TYPE_ID_MCASH_CASHIN,
-                                                                                Constants.SERVICE_TYPE_ID_UCASH_CASHIN,
-                                                                                Constants.SERVICE_TYPE_ID_TOPUP_GP,
-                                                                                Constants.SERVICE_TYPE_ID_TOPUP_ROBI,
-                                                                                Constants.SERVICE_TYPE_ID_TOPUP_BANGLALINK,
-                                                                                Constants.SERVICE_TYPE_ID_TOPUP_AIRTEL,
-                                                                                Constants.SERVICE_TYPE_ID_TOPUP_TELETALK,
-                                                                        };*/
-                                                                        intent.putExtra("service_list", serviceList);
+                                                                        intent.putExtra("service_list", serviceList);*/
                                                                         startActivity(intent);
                                                                         progressInit.dismiss();
                                                                     }

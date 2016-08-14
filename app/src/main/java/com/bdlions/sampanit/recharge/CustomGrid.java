@@ -42,7 +42,13 @@ public class CustomGrid extends BaseAdapter{
     @Override
     public long getItemId(int position) {
         // TODO Auto-generated method stub
+       // retiurn web.get(position);
         return position;
+    }
+    public String getItemName(int position) {
+        // TODO Auto-generated method stub
+        return web.get(position);
+
     }
 
     @Override
@@ -53,7 +59,6 @@ public class CustomGrid extends BaseAdapter{
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-
             grid = new View(mContext);
             grid = inflater.inflate(R.layout.recharge_services, null);
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);

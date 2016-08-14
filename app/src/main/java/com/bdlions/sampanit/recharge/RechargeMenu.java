@@ -79,29 +79,24 @@ public class RechargeMenu extends AppCompatActivity {
         }
 
     }
-
-
-
-
-
     public void genarateServiceOptions(){
         List<String> grid_services = new ArrayList<String>();
         List<Integer> grid_image = new ArrayList<Integer>();
         for (int i = 0; i < serviceList.length; i++) {
             if(serviceList[i] == Constants.SERVICE_TYPE_ID_BKASH_CASHIN){
-                grid_services.add("bKash");
+                grid_services.add(Constants.SERVICE_TYPE_TITLE_BKASH_CASHIN);
                 grid_image.add( R.drawable.bkash);
                 history_services.add(Constants.SERVICE_TYPE_ID_BKASH_CASHIN);
-            } else if(serviceList[i] == Constants.SERVICE_TYPE_ID_DBBL_CASHIN){
-                grid_services.add("DBBL");
+           } else if(serviceList[i] == Constants.SERVICE_TYPE_ID_DBBL_CASHIN){
+                grid_services.add(Constants.SERVICE_TYPE_TITLE_DBBL_CASHIN);
                 grid_image.add( R.drawable.dbbl);
                 history_services.add(Constants.SERVICE_TYPE_ID_DBBL_CASHIN);
             } else if(serviceList[i] == Constants.SERVICE_TYPE_ID_MCASH_CASHIN){
-                grid_services.add("mCash");
+                grid_services.add(Constants.SERVICE_TYPE_TITLE_MCASH_CASHIN);
                 grid_image.add( R.drawable.mcash);
                 history_services.add(Constants.SERVICE_TYPE_ID_MCASH_CASHIN);
             }  else if(serviceList[i] == Constants.SERVICE_TYPE_ID_UCASH_CASHIN){
-                grid_services.add("UCash");
+                grid_services.add(Constants.SERVICE_TYPE_TITLE_UCASH_CASHIN);
                 grid_image.add( R.drawable.ucash);
                 history_services.add(Constants.SERVICE_TYPE_ID_UCASH_CASHIN);
             }  else if(serviceList[i] == Constants.SERVICE_TYPE_ID_TOPUP_GP
@@ -113,26 +108,26 @@ public class RechargeMenu extends AppCompatActivity {
             }
         }
         if(topUpFlag != false){
-            grid_services.add("TopUp");
+            grid_services.add(Constants.SERVICE_TYPE_TITLE_TOPUP_CASHIN);
             grid_image.add( R.drawable.flexiload);
             history_services.add(Constants.SERVICE_TYPE_TOPUP_HISTORY_FLAG);
 
         }
 
-        grid_services.add("History");
+        grid_services.add(Constants.TRANSACTION_HISTROY_TITLE);
         grid_image.add( R.drawable.history);
-        grid_services.add("Account");
+        grid_services.add(Constants.ACCOUNT_TITLE);
         grid_image.add( R.drawable.account);
-        CustomGrid adapter = new CustomGrid(RechargeMenu.this, grid_services, grid_image);
+        final CustomGrid adapter = new CustomGrid(RechargeMenu.this, grid_services, grid_image);
         grid=(GridView)findViewById(R.id.list);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                switch (position) {
-                    case 0:
+               String serviceName =  adapter.getItemName(position);
+                switch (serviceName) {
+                    case Constants.SERVICE_TYPE_TITLE_BKASH_CASHIN:
                         Intent intentbKash = new Intent(getBaseContext(), bKash.class);
                         intentbKash.putExtra("BASE_URL", baseUrl);
                         intentbKash.putExtra("USER_ID", userId);
@@ -141,7 +136,7 @@ public class RechargeMenu extends AppCompatActivity {
                         startActivityForResult(intentbKash, Constants.PAGE_BKASH);
                         break;
 
-                    case 1:
+                    case Constants.SERVICE_TYPE_TITLE_DBBL_CASHIN:
                         Intent intentDBBL = new Intent(getBaseContext(), DBBL.class);
                         intentDBBL.putExtra("BASE_URL", baseUrl);
                         intentDBBL.putExtra("USER_ID", userId);
@@ -149,35 +144,35 @@ public class RechargeMenu extends AppCompatActivity {
                         startActivityForResult(intentDBBL, Constants.PAGE_DBBL);
                         break;
 
-                    case 2:
+                    case Constants.SERVICE_TYPE_TITLE_MCASH_CASHIN:
                         Intent intentmCash = new Intent(getBaseContext(), mCash.class);
                         intentmCash.putExtra("BASE_URL", baseUrl);
                         intentmCash.putExtra("USER_ID", userId);
                         intentmCash.putExtra("SESSION_ID", sessionId);
                         startActivityForResult(intentmCash, Constants.PAGE_MCASH);
                         break;
-                    case 3:
+                    case Constants.SERVICE_TYPE_TITLE_UCASH_CASHIN:
                         Intent intentUCash = new Intent(getBaseContext(), UCash.class);
                         intentUCash.putExtra("BASE_URL", baseUrl);
                         intentUCash.putExtra("USER_ID", userId);
                         intentUCash.putExtra("SESSION_ID", sessionId);
                         startActivityForResult(intentUCash, Constants.PAGE_UCASH);
                         break;
-                    case 4:
+                    case Constants.SERVICE_TYPE_TITLE_TOPUP_CASHIN:
                         Intent intentTopUp = new Intent(getBaseContext(), TopUp.class);
                         intentTopUp.putExtra("BASE_URL", baseUrl);
                         intentTopUp.putExtra("USER_ID", userId);
                         intentTopUp.putExtra("SESSION_ID", sessionId);
                         startActivityForResult(intentTopUp, Constants.PAGE_TOPUP);
                         break;
-                    case 5:
+                    case Constants.TRANSACTION_HISTROY_TITLE:
                         Intent intentHistory = new Intent(getBaseContext(), History.class);
                         intentHistory.putExtra("BASE_URL", baseUrl);
                         intentHistory.putExtra("USER_INFO", strUserInfo);
                         intentHistory.putIntegerArrayListExtra("history_services", (ArrayList<Integer>) history_services);
                         startActivity(intentHistory);
                         break;
-                    case 6:
+                    case Constants.ACCOUNT_TITLE:
                         Intent intentAccount = new Intent(getBaseContext(), Account.class);
                         intentAccount.putExtra("BASE_URL", baseUrl);
                         intentAccount.putExtra("USER_INFO", strUserInfo);
@@ -187,11 +182,6 @@ public class RechargeMenu extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
     }
 
 

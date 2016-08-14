@@ -35,5 +35,6 @@
     <string name="title_activity_payment">Payment</string>
     <string name="title_activity_change_password">ChangePassword</string>
     <string name="title_activity_account">Account</string>
+    <string name="title_activity_pin_code">PinCode</string>
 
 </resources>

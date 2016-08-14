@@ -55,5 +55,15 @@ public class Constants {
     public static final String THIRD_COLUMN = "Third";
     public static final String FOURTH_COLUMN = "Fourth";
 
+    public static final String SERVICE_TYPE_TITLE_BKASH_CASHIN = "bKash";
+    public static final String SERVICE_TYPE_TITLE_DBBL_CASHIN = "DBBL";
+    public static final String SERVICE_TYPE_TITLE_UCASH_CASHIN = "UCash";
+    public static final String SERVICE_TYPE_TITLE_MCASH_CASHIN = "mCash";
+    public static final String SERVICE_TYPE_TITLE_TOPUP_CASHIN = "TopUp";
+    public static final String TRANSACTION_HISTROY_TITLE = "History";
+    public static final String ACCOUNT_TITLE = "Account";
+
+
+
 
 }

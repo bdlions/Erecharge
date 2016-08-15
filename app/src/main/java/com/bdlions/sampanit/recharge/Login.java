@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Login extends AppCompatActivity {
+    private ConnectivityManager cm;
+    private NetworkInfo netInfo;
     private static EditText etOPCode, etLoginUserName, etPassword;
     private static String baseUrl = "";
     private static int localUserId = 0;
@@ -53,11 +55,10 @@ public class Login extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
 
         eRchargeDB = DatabaseHelper.getInstance(this);
-
         if(eRchargeDB.checkLogin() != false){
             JSONObject localUserInfo =  eRchargeDB.getUserInfo();
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            netInfo = cm.getActiveNetworkInfo();
             //opening the app with internet connection, previously logged in
             if(netInfo != null && netInfo.isConnected()){
                 try {
@@ -72,9 +73,11 @@ public class Login extends AppCompatActivity {
             //opening the app without internet connection, previously logged in
             else
             {
-                Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
-                startActivity(intent);
-                finish();
+                //Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
+                //startActivity(intent);
+                //finish();
+                Toast.makeText(getApplicationContext(), "Please connect to internet first.", Toast.LENGTH_SHORT).show();
+                return;
             }
         }
         else
@@ -207,6 +210,32 @@ public class Login extends AppCompatActivity {
 
                         try
                         {
+                            cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                            netInfo = cm.getActiveNetworkInfo();
+                            if(netInfo == null || !netInfo.isConnected())
+                            {
+                                Toast.makeText(getApplicationContext(), "Please connect to internet first.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            final String username = etLoginUserName.getText().toString();
+                            final String password = etPassword.getText().toString();
+                            final String opcode = etOPCode.getText().toString();
+                            if(username == null || username.equals(""))
+                            {
+                                Toast.makeText(getApplicationContext(), "Please assign user name.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            if(password == null || password.equals(""))
+                            {
+                                Toast.makeText(getApplicationContext(), "Please assign password.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            if(opcode == null || opcode.equals(""))
+                            {
+                                Toast.makeText(getApplicationContext(), "Please assign opcode.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
                             final ProgressDialog progressInit = new ProgressDialog(Login.this);
                             progressInit.setTitle("Login");
@@ -319,6 +348,15 @@ public class Login extends AppCompatActivity {
                                                                         intent.putExtra("service_list", serviceList);*/
                                                                         startActivity(intent);
                                                                         progressInit.dismiss();
+                                                                    }
+                                                                    else if(responseCode == 5009)
+                                                                    {
+                                                                        progressInit.dismiss();
+                                                                        runOnUiThread(new Runnable() {
+                                                                            public void run() {
+                                                                                Toast.makeText(getBaseContext(), "Unable to create your session. Please try again later.", Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        });
                                                                     }
                                                                     else
                                                                     {

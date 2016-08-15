@@ -169,6 +169,7 @@ public class RechargeMenu extends AppCompatActivity {
                         Intent intentHistory = new Intent(getBaseContext(), History.class);
                         intentHistory.putExtra("BASE_URL", baseUrl);
                         intentHistory.putExtra("USER_INFO", strUserInfo);
+                        intentHistory.putExtra("SESSION_ID", sessionId);
                         intentHistory.putIntegerArrayListExtra("history_services", (ArrayList<Integer>) history_services);
                         startActivity(intentHistory);
                         break;
@@ -176,6 +177,7 @@ public class RechargeMenu extends AppCompatActivity {
                         Intent intentAccount = new Intent(getBaseContext(), Account.class);
                         intentAccount.putExtra("BASE_URL", baseUrl);
                         intentAccount.putExtra("USER_INFO", strUserInfo);
+                        intentAccount.putExtra("SESSION_ID", sessionId);
                         intentAccount.putIntegerArrayListExtra("history_services", (ArrayList<Integer>) history_services);
                         startActivity(intentAccount);
                         break;

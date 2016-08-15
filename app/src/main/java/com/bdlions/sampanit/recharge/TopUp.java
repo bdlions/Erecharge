@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -31,12 +33,16 @@ public class TopUp extends AppCompatActivity {
     private static String sessionId = "";
     private static Button buttonTopupSend;
     private static EditText editTextCellNumber, editTextAmount;
+    private static RadioGroup radioGroupTopupPackage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_up);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        radioGroupTopupPackage = (RadioGroup) findViewById(R.id.radioTypeTopUp);
 
         editTextCellNumber = (EditText) findViewById(R.id.etMobileNumberTopUp);
         editTextAmount = (EditText) findViewById(R.id.etAmountTopUp);
@@ -57,9 +63,14 @@ public class TopUp extends AppCompatActivity {
                     public void onClick(View v) {
                         try
                         {
+                            int radioButtonID = radioGroupTopupPackage.getCheckedRadioButtonId();
+                            View radioButton = radioGroupTopupPackage.findViewById(radioButtonID);
+                            //package id 1 is prepaid and 2 is postpaid. index of prepaid is 0 and postpaid is 1
+                            final int packageId = radioGroupTopupPackage.indexOfChild(radioButton)+1;
+
                             //given cell number validation
                             String phoneString = editTextCellNumber.getText().toString();
-                            String regexPattern = "^[+880|0][1][1|6|7|8|9][0-9]{8}$";
+                            String regexPattern = "^[+880|0][1][1|5|6|7|8|9][0-9]{8}$";
                             boolean isValid = phoneString.matches(regexPattern);
                             if(isValid != true){
                                 Toast.makeText(getApplicationContext(), "Please assign a valid phone number !!", Toast.LENGTH_SHORT).show();
@@ -70,9 +81,9 @@ public class TopUp extends AppCompatActivity {
                             try
                             {
                                 doubleAmount = Double.parseDouble(strAmount);
-                                if(doubleAmount < 50)
+                                if(doubleAmount < 10)
                                 {
-                                    Toast.makeText(getApplicationContext(), "Amount must be greater than 50", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Please assign minimum 10 TK.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                             }
@@ -104,6 +115,7 @@ public class TopUp extends AppCompatActivity {
                                         nameValuePairs.add(new BasicNameValuePair("amount", editTextAmount.getText().toString()));
                                         nameValuePairs.add(new BasicNameValuePair("user_id", "" + userId));
                                         nameValuePairs.add(new BasicNameValuePair("session_id", "" + sessionId));
+                                        nameValuePairs.add(new BasicNameValuePair("operator_type_id", "" + packageId));
 
                                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                                         HttpResponse response = client.execute(post);
@@ -127,9 +139,10 @@ public class TopUp extends AppCompatActivity {
 
                                             }
                                             if(responseCode == 2000){
-                                                JSONObject resultedCurrentBalanceInfo = (JSONObject) resultEvent.get("result_event");
-                                                int currentBalance =  resultedCurrentBalanceInfo.getInt("current_balance");
-                                                String cBalance = Integer.toString(currentBalance);
+                                                //JSONObject resultedCurrentBalanceInfo = (JSONObject) resultEvent.get("result_event");
+                                                //int currentBalance =  resultedCurrentBalanceInfo.getInt("current_balance");
+                                                //String cBalance = Integer.toString(currentBalance);
+                                                String cBalance = resultEvent.get("current_balance").toString();
                                                 progress.dismiss();
                                                 Intent intent = new Intent();
                                                 intent.putExtra("currentBalance", cBalance);

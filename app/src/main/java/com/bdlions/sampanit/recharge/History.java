@@ -65,6 +65,7 @@ public class History extends AppCompatActivity {
         strUserInfo = getIntent().getExtras().getString("USER_INFO");
         try
         {
+            sessionId = getIntent().getExtras().getString("SESSION_ID");
             strUserInfo = getIntent().getExtras().getString("USER_INFO");
             JSONObject jsonUserInfo  = new JSONObject(strUserInfo);
             userInfo.setFirstName((String) jsonUserInfo.get("first_name"));
@@ -157,7 +158,7 @@ public class History extends AppCompatActivity {
                         HttpPost post = new HttpPost(baseUrl+"androidapp/transaction/get_bkash_transaction_list");
 
                         List<NameValuePair> nameValuePairs = new ArrayList<>();
-                        nameValuePairs.add(new BasicNameValuePair("user_id", userId+""));
+                        nameValuePairs.add(new BasicNameValuePair("user_id", userInfo.getUserId()+""));
                         nameValuePairs.add(new BasicNameValuePair("session_id", sessionId));
 
                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -204,6 +205,24 @@ public class History extends AppCompatActivity {
                                     });
                                 }
 
+                            }
+                            else if(responseCode == 5001)
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Your session is expired. Please login again", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Empty response from the server.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                         else
@@ -254,7 +273,7 @@ public class History extends AppCompatActivity {
                         HttpPost post = new HttpPost(baseUrl+"androidapp/transaction/get_dbbl_transaction_list");
 
                         List<NameValuePair> nameValuePairs = new ArrayList<>();
-                        nameValuePairs.add(new BasicNameValuePair("user_id", userId+""));
+                        nameValuePairs.add(new BasicNameValuePair("user_id", userInfo.getUserId()+""));
                         nameValuePairs.add(new BasicNameValuePair("session_id", sessionId));
 
                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -301,6 +320,24 @@ public class History extends AppCompatActivity {
                                     });
                                 }
 
+                            }
+                            else if(responseCode == 5001)
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Your session is expired. Please login again", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Empty response from the server.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                         else
@@ -351,7 +388,7 @@ public class History extends AppCompatActivity {
                         HttpPost post = new HttpPost(baseUrl+"androidapp/transaction/get_mcash_transaction_list");
 
                         List<NameValuePair> nameValuePairs = new ArrayList<>();
-                        nameValuePairs.add(new BasicNameValuePair("user_id", userId+""));
+                        nameValuePairs.add(new BasicNameValuePair("user_id", userInfo.getUserId()+""));
                         nameValuePairs.add(new BasicNameValuePair("session_id", sessionId));
 
                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -398,6 +435,24 @@ public class History extends AppCompatActivity {
                                     });
                                 }
 
+                            }
+                            else if(responseCode == 5001)
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Your session is expired. Please login again", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Empty response from the server.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                         else
@@ -448,7 +503,7 @@ public class History extends AppCompatActivity {
                         HttpPost post = new HttpPost(baseUrl+"androidapp/transaction/get_ucash_transaction_list");
 
                         List<NameValuePair> nameValuePairs = new ArrayList<>();
-                        nameValuePairs.add(new BasicNameValuePair("user_id", userId+""));
+                        nameValuePairs.add(new BasicNameValuePair("user_id", userInfo.getUserId()+""));
                         nameValuePairs.add(new BasicNameValuePair("session_id", sessionId));
 
                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -495,6 +550,24 @@ public class History extends AppCompatActivity {
                                     });
                                 }
 
+                            }
+                            else if(responseCode == 5001)
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Your session is expired. Please login again", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Empty response from the server.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                         else
@@ -545,7 +618,7 @@ public class History extends AppCompatActivity {
                         HttpPost post = new HttpPost(baseUrl+"androidapp/transaction/get_topup_transaction_list");
 
                         List<NameValuePair> nameValuePairs = new ArrayList<>();
-                        nameValuePairs.add(new BasicNameValuePair("user_id", userId+""));
+                        nameValuePairs.add(new BasicNameValuePair("user_id", userInfo.getUserId()+""));
                         nameValuePairs.add(new BasicNameValuePair("session_id", sessionId));
 
                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -592,6 +665,24 @@ public class History extends AppCompatActivity {
                                     });
                                 }
 
+                            }
+                            else if(responseCode == 5001)
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Your session is expired. Please login again", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Empty response from the server.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                         else

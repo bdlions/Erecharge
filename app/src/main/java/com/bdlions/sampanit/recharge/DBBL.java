@@ -117,9 +117,10 @@ public class DBBL extends AppCompatActivity {
 
                                             }
                                             if (responseCode == 2000) {
-                                                JSONObject resultedCurrentBalanceInfo = (JSONObject) resultEvent.get("result_event");
-                                                int currentBalance = resultedCurrentBalanceInfo.getInt("current_balance");
-                                                String cBalance = Integer.toString(currentBalance);
+                                                //JSONObject resultedCurrentBalanceInfo = (JSONObject) resultEvent.get("result_event");
+                                                //int currentBalance = resultedCurrentBalanceInfo.getInt("current_balance");
+                                                //String cBalance = Integer.toString(currentBalance);
+                                                String cBalance = resultEvent.get("current_balance").toString();
                                                 progress.dismiss();
                                                 Intent intent = new Intent();
                                                 intent.putExtra("currentBalance", cBalance);

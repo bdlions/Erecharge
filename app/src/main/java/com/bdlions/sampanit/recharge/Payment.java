@@ -39,9 +39,9 @@ public class Payment extends AppCompatActivity {
     private void populateList(String paymentTList) {
         //table header
         HashMap<String, String> temp = new HashMap<String, String>();
-        temp.put(FIRST_COLUMN, "Amount");
-        temp.put(SECOND_COLUMN, "Date");
-        temp.put(THIRD_COLUMN, "Status");
+        temp.put(FIRST_COLUMN, "Date");
+        temp.put(SECOND_COLUMN, "Amount");
+        temp.put(THIRD_COLUMN, "User");
         paymentHistoryList.add(temp);
         try
         {
@@ -49,9 +49,11 @@ public class Payment extends AppCompatActivity {
             for (int i = 0; i < paymentTransactionArray.length(); i++) {
                 JSONObject transactionObject = paymentTransactionArray.getJSONObject(i);
                 HashMap<String, String> temp2 = new HashMap<String, String>();
-                temp2.put(FIRST_COLUMN, transactionObject.getDouble("amount")+"");
-                temp2.put(SECOND_COLUMN, (String)transactionObject.get("date"));
-                temp2.put(THIRD_COLUMN, (String)transactionObject.get("status"));
+                temp2.put(FIRST_COLUMN, transactionObject.get("date").toString());
+                temp2.put(SECOND_COLUMN, transactionObject.get("amount").toString());
+                temp2.put(THIRD_COLUMN, transactionObject.get("username").toString());
+
+
                 paymentHistoryList.add(temp2);
             }
         }

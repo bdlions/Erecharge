@@ -31,6 +31,7 @@ public class Account extends AppCompatActivity {
     private static int userId = 0;
     private static String sessionId = "";
     private String strUserInfo;
+    UserInfo userInfo = new UserInfo();
     GridView account_grid;
     List<String> grid_account_services = new ArrayList<String>();
     List<Integer> grid_account_images = new ArrayList<Integer>();
@@ -41,9 +42,21 @@ public class Account extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        baseUrl = getIntent().getExtras().getString("BASE_URL");
-        strUserInfo = getIntent().getExtras().getString("USER_INFO");
-        sessionId = getIntent().getExtras().getString("SESSION_ID");
+        try
+        {
+            baseUrl = getIntent().getExtras().getString("BASE_URL");
+            sessionId = getIntent().getExtras().getString("SESSION_ID");
+            strUserInfo = getIntent().getExtras().getString("USER_INFO");
+            JSONObject jsonUserInfo  = new JSONObject(strUserInfo);
+            userInfo.setFirstName((String) jsonUserInfo.get("first_name"));
+            userInfo.setLastName((String) jsonUserInfo.get("last_name"));
+            userInfo.setUserId(Integer.parseInt((String) jsonUserInfo.get("user_id")));
+            userId = userInfo.getUserId();
+        }
+        catch(Exception ex)
+        {
+            //handle the exception here
+        }
 
         grid_account_services.add("Payment History");
         grid_account_images.add(R.drawable.payment);
@@ -65,6 +78,9 @@ public class Account extends AppCompatActivity {
 
                     case 1:
                         Intent intentChangePassword = new Intent(Account.this, ChangePassword.class);
+                        intentChangePassword.putExtra("BASE_URL", baseUrl);
+                        intentChangePassword.putExtra("USER_ID", userId);
+                        intentChangePassword.putExtra("SESSION_ID", sessionId);
                         startActivity(intentChangePassword);
                         break;
                 }
@@ -92,7 +108,7 @@ public class Account extends AppCompatActivity {
                         HttpPost post = new HttpPost(baseUrl+"androidapp/transaction/get_payment_transaction_list");
 
                         List<NameValuePair> nameValuePairs = new ArrayList<>();
-                        nameValuePairs.add(new BasicNameValuePair("user_id", userId+""));
+                        nameValuePairs.add(new BasicNameValuePair("user_id", userInfo.getUserId()+""));
                         nameValuePairs.add(new BasicNameValuePair("session_id", sessionId));
 
                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));

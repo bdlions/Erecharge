@@ -76,6 +76,13 @@ public class PinCode extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         try {
+                            final String pincode = editPinCode.getText().toString();
+                            if(pincode == null || pincode.equals(""))
+                            {
+                                Toast.makeText(getApplicationContext(), "Please assign pin code.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
                             final ProgressDialog progress = new ProgressDialog(PinCode.this);
                             progress.setTitle("Processing");
                             progress.setMessage("Varifying  user...");

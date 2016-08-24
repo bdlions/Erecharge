@@ -48,13 +48,12 @@ public class PinCode extends AppCompatActivity {
         editPinCode = (EditText) findViewById(R.id.etPinCode);
 
         Bundle extras = getIntent().getExtras();
-
+        eRchargeDB = DatabaseHelper.getInstance(this);
         if (extras != null) {
             userId = (int) getIntent().getExtras().get("USER_ID");
             baseUrl = getIntent().getExtras().getString("BASE_URL");
             sessionId = getIntent().getExtras().getString("SESSION_ID");
         }else{
-            eRchargeDB = DatabaseHelper.getInstance(this);
             JSONObject localUserInfo =  eRchargeDB.getUserInfo();
             try {
                 userId = (int) localUserInfo.get("userId");
@@ -119,6 +118,7 @@ public class PinCode extends AppCompatActivity {
                                                 try
                                                 {
                                                     JSONObject jsonResultEvent = (JSONObject) resultEvent.get("result_event");
+                                                    int  updateResult = eRchargeDB.updatePinCode(userId,pincode);
                                                     Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
                                                     intent.putExtra("BASE_URL", baseUrl);
                                                     intent.putExtra("USER_INFO", jsonResultEvent.get("user_info").toString());

@@ -11,8 +11,9 @@ public class QueryField {
     public static final String USER_ID = "user_id";
     public static final String USER_NMAE = "username";
     public static final String PASSWORD = "password";
-    public static final String OP_CODE = "opcode";
     public static final String BASE_URL = "base_url";
     public static final String SESSION_ID = "session_id";
+    public static final String OP_CODE = "opcode";
+    public static final String PIN_CODE = "pin_code";
 
 }

@@ -81,54 +81,54 @@ public class History extends AppCompatActivity {
         for (int i = 0; i < history_services.size(); i++) {
             if(history_services.get(i) == Constants.SERVICE_TYPE_TOPUP_HISTORY_FLAG){
                 grid_image.add(R.drawable.flexiload);
-                grid_text_list.add("TopUp History");
+                grid_text_list.add(Constants.SERVICE_TYPE_TITLE_TOPUP_HISTORY);
 
             }
             else if(history_services.get(i) == Constants.SERVICE_TYPE_ID_BKASH_CASHIN){
                 grid_image.add( R.drawable.bkash);
-                grid_text_list.add("bKash History");
+                grid_text_list.add(Constants.SERVICE_TYPE_TITLE_BKASH_HISTORY);
             }
             else if(history_services.get(i) == Constants.SERVICE_TYPE_ID_DBBL_CASHIN){
                 grid_image.add( R.drawable.dbbl);
-                grid_text_list.add("DBBL History");
+                grid_text_list.add(Constants.SERVICE_TYPE_TITLE_DBBL_HISTORY);
             }
             else if(history_services.get(i) == Constants.SERVICE_TYPE_ID_MCASH_CASHIN){
                 grid_image.add( R.drawable.mcash);
-                grid_text_list.add("mCash History");
+                grid_text_list.add(Constants.SERVICE_TYPE_TITLE_MCASH_HISTORY);
             }
             else if(history_services.get(i) == Constants.SERVICE_TYPE_ID_UCASH_CASHIN){
                 grid_image.add( R.drawable.ucash);
-                grid_text_list.add("UCash History");
+                grid_text_list.add(Constants.SERVICE_TYPE_TITLE_UCASH_HISTORY);
             }
         }
 
-        CustomGrid historyAdapter = new CustomGrid(History.this, grid_text_list, grid_image);
+        final CustomGrid historyAdapter = new CustomGrid(History.this, grid_text_list, grid_image);
         grid_history=(GridView)findViewById(R.id.history_list);
         grid_history.setAdapter(historyAdapter);
         grid_history.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                switch (position) {
-                    case 0:
+                String serviceName =  historyAdapter.getItemName(position);
+                switch (serviceName) {
+                    case Constants.SERVICE_TYPE_TITLE_BKASH_HISTORY:
 
                         showBkashHistory();
                         break;
 
-                    case 1:
+                    case Constants.SERVICE_TYPE_TITLE_DBBL_HISTORY:
                         showDBBLHistory();
                         break;
 
-                    case 2:
+                    case Constants.SERVICE_TYPE_TITLE_MCASH_HISTORY:
                         showMcashHistory();
                         break;
 
-                    case 3:
+                    case Constants.SERVICE_TYPE_TITLE_UCASH_HISTORY:
                         showUcashHistory();
                         break;
 
-                    case 4:
+                    case Constants.SERVICE_TYPE_TITLE_TOPUP_HISTORY:
                         showTopupHistory();
                         break;
 

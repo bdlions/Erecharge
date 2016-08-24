@@ -39,12 +39,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     }
-    public boolean createUser(int userId, String userNmae, String password, String opcode, String baseUrl, String sessionId){
+    public boolean createUser(int userId, String userName, String password, String opcode, String baseUrl, String sessionId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(QueryField.USER_ID,userId);
         contentValues.put(QueryField.SESSION_ID, sessionId);
-        contentValues.put(QueryField.USER_NMAE,userNmae);
+        contentValues.put(QueryField.USER_NMAE,userName);
         contentValues.put(QueryField.BASE_URL,baseUrl);
         contentValues.put(QueryField.OP_CODE,opcode);
         contentValues.put(QueryField.PASSWORD,password);
@@ -70,11 +70,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 try {
-                    userInfo.put("userId", cursor.getInt(1));
-                    userInfo.put("sessionId", cursor.getString(2));
-                    userInfo.put("userName", cursor.getString(3));
-                    userInfo.put("baseUrl", cursor.getString(4));
-                    userInfo.put("opCode", cursor.getString(5));
+                    userInfo.put("userId", cursor.getInt(cursor.getColumnIndex(QueryField.USER_ID)));
+                    userInfo.put("sessionId", cursor.getString(cursor.getColumnIndex(QueryField.SESSION_ID)));
+                    userInfo.put("userName", cursor.getString(cursor.getColumnIndex(QueryField.USER_NMAE)));
+                    userInfo.put("baseUrl", cursor.getString(cursor.getColumnIndex(QueryField.BASE_URL)));
+                    userInfo.put("opCode", cursor.getString(cursor.getColumnIndex(QueryField.OP_CODE)));
+                    userInfo.put("password", cursor.getString(cursor.getColumnIndex(QueryField.PASSWORD)));
+                    userInfo.put("pinCode", cursor.getString(cursor.getColumnIndex(QueryField.PIN_CODE)));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -98,6 +100,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         mCursor.close();
 
         return true;
+    }
+    public int updatePinCode(int userId, String pinCode) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues updateUserInfo = new ContentValues();
+        updateUserInfo.put(QueryField.PIN_CODE, pinCode);
+        // updating row
+        return db.update(QueryField.TABLE_USERS, updateUserInfo, QueryField.USER_ID + " = ?",
+                new String[] { String.valueOf(userId) });
+    }
+
+    public void deleteUserInfo(int userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(QueryField.TABLE_USERS, QueryField.USER_ID + " = ?",
+                new String[]{String.valueOf(userId)});
+        db.close();
     }
 
 

@@ -62,6 +62,12 @@ public class Constants {
     public static final String SERVICE_TYPE_TITLE_TOPUP_CASHIN = "TopUp";
     public static final String TRANSACTION_HISTROY_TITLE = "History";
     public static final String ACCOUNT_TITLE = "Account";
+    public static final String SERVICE_TYPE_TITLE_BKASH_HISTORY = "bKash History";
+    public static final String SERVICE_TYPE_TITLE_DBBL_HISTORY = "DBBL History";
+    public static final String SERVICE_TYPE_TITLE_UCASH_HISTORY = "UCash History";
+    public static final String SERVICE_TYPE_TITLE_MCASH_HISTORY = "mCash History";
+    public static final String SERVICE_TYPE_TITLE_TOPUP_HISTORY = "TopUp History";
+
 
 
 

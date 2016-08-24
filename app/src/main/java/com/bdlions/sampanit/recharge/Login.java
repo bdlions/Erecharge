@@ -40,6 +40,9 @@ public class Login extends AppCompatActivity {
     private static String baseUrl = "";
     private static int localUserId = 0;
     private static String sessionId = "";
+    private static String pinCode = "";
+    private static String userName = "";
+    private static String password = "";
     private static Button buttonLogin;
     private static DatabaseHelper eRchargeDB;
 
@@ -55,16 +58,24 @@ public class Login extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
 
         eRchargeDB = DatabaseHelper.getInstance(this);
-        if(eRchargeDB.checkLogin() != false){
+        cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        netInfo = cm.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected()){
+            Toast.makeText(getApplicationContext(), "Please connect to internet first.", Toast.LENGTH_SHORT).show();
+        }
+        else if(eRchargeDB.checkLogin() != false)
+        {
             JSONObject localUserInfo =  eRchargeDB.getUserInfo();
-            cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            netInfo = cm.getActiveNetworkInfo();
             //opening the app with internet connection, previously logged in
             if(netInfo != null && netInfo.isConnected()){
                 try {
                     localUserId = (int) localUserInfo.get("userId");
                     baseUrl = (String) localUserInfo.get("baseUrl");
                     sessionId = (String) localUserInfo.get("sessionId");
+                    pinCode = (String) localUserInfo.get("pinCode");
+                    userName = (String) localUserInfo.get("userName");
+                    password = (String) localUserInfo.get("password");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -73,18 +84,10 @@ public class Login extends AppCompatActivity {
             //opening the app without internet connection, previously logged in
             else
             {
-                //Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
-                //startActivity(intent);
-                //finish();
                 Toast.makeText(getApplicationContext(), "Please connect to internet first.", Toast.LENGTH_SHORT).show();
-                return;
             }
         }
-        else
-        {
-            //login for the first time
-            onClickButtonLoginListener();
-        }
+        onClickButtonLoginListener();
     }
 
     public void getUserInfo(){
@@ -106,7 +109,10 @@ public class Login extends AppCompatActivity {
                         HttpPost post = new HttpPost(baseUrl + "androidapp/auth/get_user_basic_info");
                         List<NameValuePair> nameValuePairs = new ArrayList<>();
                         nameValuePairs.add(new BasicNameValuePair("user_id", localUserId+""));
-                        nameValuePairs.add(new BasicNameValuePair("session_id", sessionId +""));
+                        nameValuePairs.add(new BasicNameValuePair("user_name", userName));
+                        nameValuePairs.add(new BasicNameValuePair("password", password));
+                        nameValuePairs.add(new BasicNameValuePair("pin_code", pinCode));
+                        nameValuePairs.add(new BasicNameValuePair("session_id", sessionId));
                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                         HttpResponse response = client.execute(post);
                         BufferedReader rd = new BufferedReader
@@ -169,6 +175,18 @@ public class Login extends AppCompatActivity {
                                     });
                                 }
 
+                            }
+                            else
+                            {
+                                //remove user info from the db
+                                //show a proper message that credential expired or wrong and allow user to login again.
+                                eRchargeDB.deleteUserInfo(localUserId);
+                                progress.dismiss();
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getBaseContext(), "Please login again.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                         else
@@ -251,7 +269,7 @@ public class Login extends AppCompatActivity {
                                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                                         StrictMode.setThreadPolicy(policy);
                                         HttpClient client = new DefaultHttpClient();
-                                        HttpPost post = new HttpPost("http://199.33.127.59:4040/getbaseurl");
+                                        HttpPost post = new HttpPost("http://212.24.103.134:4040/getbaseurl");
 
                                         List<NameValuePair> nameValuePairs = new ArrayList<>();
                                         nameValuePairs.add(new BasicNameValuePair("code", etOPCode.getText().toString()));
@@ -324,12 +342,12 @@ public class Login extends AppCompatActivity {
 
 
                                                                         Utils utils = new Utils();
-                                                                        String  hashPassword =  utils.computeSHAHash(etPassword.getText().toString());
+                                                                        //String  hashPassword =  utils.computeSHAHash(etPassword.getText().toString());
                                                                         String tempUserInfo = jsonResultEvent.get("user_info").toString();
                                                                         JSONObject jsonUserInfo  = new JSONObject(tempUserInfo);
                                                                         int tempUserId =    Integer.parseInt(jsonUserInfo.get("user_id").toString());
                                                                         String sessionId = jsonResultEvent.get("session_id").toString();
-                                                                        boolean localResponse = eRchargeDB.createUser(tempUserId, etLoginUserName.getText().toString(), hashPassword, etOPCode.getText().toString(), baseUrl, sessionId);
+                                                                        boolean localResponse = eRchargeDB.createUser(tempUserId, etLoginUserName.getText().toString(), etPassword.getText().toString(), etOPCode.getText().toString(), baseUrl, sessionId);
 
 
                                                                         Intent intent = new Intent(getBaseContext(), PinCode.class);

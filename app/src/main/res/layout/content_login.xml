@@ -87,7 +87,7 @@
         android:background="#0072C6"
         android:textColor="#fff"
         android:textSize="18dp" />
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -95,6 +95,6 @@
         android:layout_gravity="center"
         android:textColor="@color/colorAccent"
         android:textSize="16dp"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold" />-->
 </LinearLayout>
 

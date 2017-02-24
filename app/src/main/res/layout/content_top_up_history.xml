@@ -15,11 +15,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
         android:text="Top Up History"
         android:textColor="#fff"
         android:textSize="25dp"
         android:textStyle="normal|bold|italic" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:text="Latest 10 history"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:textStyle="normal" />
     <ListView
         android:id="@+id/list_view_top_up_history"
         android:layout_width="match_parent"

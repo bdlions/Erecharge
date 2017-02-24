@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bdlions.sampanit.recharge">
+    package="com.bdlions.trustedload.recharge">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,27 +24,16 @@
             android:name=".RechargeMenu"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.RechargeMenu" />
+                <action android:name="com.badlions.trustedload.recharge.RechargeMenu" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--
-      <activity
-          android:name="com.bdlions.sampanit.recharge.RechargeMenu"
-          android:theme="@style/AppTheme">
-          <intent-filter>
-              <action android:name="android.intent.action.MAIN" />
-
-              <category android:name="android.intent.category.LAUNCHER" />
-          </intent-filter>
-      </activity>
-        -->
         <activity
-            android:name=".bKash"
+            android:name=".BKash"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.bKash" />
+                <action android:name="com.badlions.trustedload.recharge.bKash" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -53,16 +42,16 @@
             android:name=".History"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.History" />
+                <action android:name="com.badlions.trustedload.recharge.History" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".bKashHistory"
+            android:name=".BKashHistory"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.bKashHistory" />
+                <action android:name="com.badlions.trustedload.recharge.bKashHistory" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -71,7 +60,7 @@
             android:name=".TopUpHistory"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.TopUpHistory" />
+                <action android:name="com.badlions.trustedload.recharge.TopUpHistory" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -80,7 +69,7 @@
             android:name=".TopUp"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.TopUp" />
+                <action android:name="com.badlions.trustedload.recharge.TopUp" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -89,16 +78,16 @@
             android:name=".DBBL"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.DBBL" />
+                <action android:name="com.badlions.trustedload.recharge.DBBL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".mCash"
+            android:name=".MCash"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.mCash" />
+                <action android:name="com.badlions.trustedload.recharge.mCash" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -107,7 +96,7 @@
             android:name=".UCash"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.UCash" />
+                <action android:name="com.badlions.trustedload.recharge.UCash" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -116,16 +105,16 @@
             android:name=".DBBLHistory"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.DBBLHistory" />
+                <action android:name="com.badlions.trustedload.recharge.DBBLHistory" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".mCashHistory"
+            android:name=".MCashHistory"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.mCashHistory" />
+                <action android:name="com.badlions.trustedload.recharge.mCashHistory" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -134,16 +123,7 @@
             android:name=".UCashHistory"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.UCashHistory" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".CreateReseller"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.CreateReseller" />
+                <action android:name="com.badlions.trustedload.recharge.UCashHistory" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -152,7 +132,7 @@
             android:name=".Payment"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.Payment" />
+                <action android:name="com.badlions.trustedload.recharge.Payment" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -161,16 +141,7 @@
             android:name=".ChangePassword"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.ChangePassword" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Reseller"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.Reseller" />
+                <action android:name="com.badlions.trustedload.recharge.ChangePassword" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -179,7 +150,7 @@
             android:name=".Account"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.Account" />
+                <action android:name="com.badlions.trustedload.recharge.Account" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -189,11 +160,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="com.badlions.sampanit.recharge.PinCode" />
+                <action android:name="com.badlions.trustedload.recharge.PinCode" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PackageRecharge"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="com.badlions.trustedload.recharge.PackageRecharge" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

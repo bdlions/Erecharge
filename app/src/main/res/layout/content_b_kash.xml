@@ -29,14 +29,13 @@
         android:text="Enter Mobile Number"
         android:textColor="#fff"
         android:textSize="16dp" />
-    <EditText
-        android:id="@+id/etMobileNumberbKash"
+    <AutoCompleteTextView
+        android:id="@+id/actvMobileNumberbKash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
-        android:hint="01XXXXXXXXX"
         android:textColor="#000"
-        android:inputType="text"
+        android:inputType="number"
         android:padding="5dp"
         android:textSize="16dp" />
     <TextView
@@ -52,9 +51,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
-        android:hint="1000"
+        android:hint="100"
         android:textColor="#000"
-        android:inputType="text"
+        android:inputType="number"
         android:padding="5dp"
         android:textSize="16dp" />
     <RadioGroup
@@ -74,16 +73,16 @@
             android:textColor="#333"
             android:textSize="16dp"
             android:checked="true" />
-        <!--<RadioButton-->
-            <!--android:id="@+id/rbCashOutbKash"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:text="Cash Out"-->
-            <!--android:background="#fff"-->
-            <!--android:textColor="#333"-->
-            <!--android:textSize="16dp" />-->
+        <RadioButton
+            android:id="@+id/rbCashOutbKash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="Cash Out"
+            android:background="#fff"
+            android:textColor="#333"
+            android:textSize="16dp" />
     </RadioGroup>
     <Button
         android:id="@+id/bSendNowbKash"

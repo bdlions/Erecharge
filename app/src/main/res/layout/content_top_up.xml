@@ -29,14 +29,14 @@
         android:text="Enter Mobile Number"
         android:textColor="#fff"
         android:textSize="16dp" />
-    <EditText
-        android:id="@+id/etMobileNumberTopUp"
+    <AutoCompleteTextView
+        android:id="@+id/actvMobileNumberTopUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
-        android:hint="01XXXXXXXXX"
+        android:hint=""
+        android:inputType="number"
         android:textColor="#000"
-        android:inputType="text"
         android:padding="5dp"
         android:textSize="16dp" />
     <TextView
@@ -52,9 +52,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
-        android:hint="1000"
+        android:hint="100"
         android:textColor="#000"
-        android:inputType="text"
+        android:inputType="number"
         android:padding="5dp"
         android:textSize="16dp" />
     <RadioGroup

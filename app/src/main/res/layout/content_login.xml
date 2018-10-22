@@ -18,7 +18,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="30dp"
-        android:text="Trustedload v2"
+        android:text="Trustedload v3"
         android:textColor="#fff"
         android:textSize="25dp"
         android:textStyle="normal|bold|italic" />

@@ -1,4 +1,4 @@
-package com.bdlions.sampanit.recharge;
+package com.bdlions.trustedload.recharge;
 
 import org.junit.Test;
 

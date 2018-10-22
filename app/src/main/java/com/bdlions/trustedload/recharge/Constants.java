@@ -6,21 +6,22 @@ package com.bdlions.trustedload.recharge;
 public class Constants {
 
     public static final String URL_BASEURL = "http://212.24.103.134:4040/getbaseurl";
-    public static final String URL_LOGIN = "androidappv2/auth/login";
-    public static final String URL_PIN = "androidappv2/auth/pin";
-    public static final String URL_PACKAGE_DETAILS = "androidappv2/transaction/get_package_details";
-    public static final String URL_TRANSACTION_TOPUP = "androidappv2/transaction/topup";
-    public static final String URL_TRANSACTION_LIST_TOPUP = "androidappv2/transaction/get_topup_transaction_list";
-    public static final String URL_TRANSACTION_BKASH = "androidappv2/transaction/bkash";
-    public static final String URL_TRANSACTION_LIST_BKASH = "androidappv2/transaction/get_bkash_transaction_list";
-    public static final String URL_TRANSACTION_DBBL = "androidappv2/transaction/dbbl";
-    public static final String URL_TRANSACTION_LIST_DBBL = "androidappv2/transaction/get_dbbl_transaction_list";
-    public static final String URL_TRANSACTION_MCASH = "androidappv2/transaction/mcash";
-    public static final String URL_TRANSACTION_LIST_MCASH = "androidappv2/transaction/get_mcash_transaction_list";
-    public static final String URL_TRANSACTION_UCASH = "androidappv2/transaction/ucash";
-    public static final String URL_TRANSACTION_LIST_UCASH = "androidappv2/transaction/get_ucash_transaction_list";
-    public static final String URL_TRANSACTION_LIST_PAYMENT = "androidappv2/transaction/get_payment_transaction_list";
-    public static final String URL_UPDATE_PASSWORD = "androidappv2/auth/update_password";
+    public static final String URL_LOGIN = "androidappv3/auth/login";
+    public static final String URL_PIN = "androidappv3/auth/pin";
+    public static final String URL_PACKAGE_DETAILS = "androidappv3/transaction/get_package_details";
+    public static final String URL_TRANSACTION_TOPUP = "androidappv3/transaction/topup";
+    public static final String URL_TRANSACTION_LIST_TOPUP = "androidappv3/transaction/get_topup_transaction_list";
+    public static final String URL_TRANSACTION_BKASH = "androidappv3/transaction/bkash";
+    public static final String URL_TRANSACTION_LIST_BKASH = "androidappv3/transaction/get_bkash_transaction_list";
+    public static final String URL_TRANSACTION_DBBL = "androidappv3/transaction/dbbl";
+    public static final String URL_TRANSACTION_LIST_DBBL = "androidappv3/transaction/get_dbbl_transaction_list";
+    public static final String URL_TRANSACTION_MCASH = "androidappv3/transaction/mcash";
+    public static final String URL_TRANSACTION_LIST_MCASH = "androidappv3/transaction/get_mcash_transaction_list";
+    public static final String URL_TRANSACTION_UCASH = "androidappv3/transaction/ucash";
+    public static final String URL_TRANSACTION_LIST_UCASH = "androidappv3/transaction/get_ucash_transaction_list";
+    public static final String URL_TRANSACTION_LIST_PAYMENT = "androidappv3/transaction/get_payment_transaction_list";
+    public static final String URL_UPDATE_PASSWORD = "androidappv3/auth/update_password";
+    public static final String URL_LOGOUT = "androidappv3/auth/logout";
 
     public static final int PAGE_BKASH = 1;
     public static final int PAGE_BKASH_BACK = 1;
@@ -101,5 +102,6 @@ public class Constants {
     public static final int ERROR_CODE_APP_INVALID_PIN                  = 6003;
     public static final int ERROR_CODE_APP_INVALID_USER                 = 6004;
     public static final int ERROR_CODE_APP_UPDATE_PASSWORD_FAILED       = 6005;
+    public static final int ERROR_CODE_APP_LOGOUT_FAILED                = 6015;
 
 }

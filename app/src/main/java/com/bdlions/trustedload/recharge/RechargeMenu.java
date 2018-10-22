@@ -1,7 +1,10 @@
 package com.bdlions.trustedload.recharge;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,6 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RechargeMenu extends AppCompatActivity {
+    private ConnectivityManager cm;
+    private NetworkInfo netInfo;
+    private static String message = "";
+
     private static String baseUrl = "";
     private static int userId = 0;
     private static String sessionId = "";
@@ -47,6 +55,9 @@ public class RechargeMenu extends AppCompatActivity {
         setContentView(R.layout.activity_recharge_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        netInfo = cm.getActiveNetworkInfo();
 
         companyName = (TextView)findViewById(R.id.companyName);
         userName = (TextView)findViewById(R.id.userName);
@@ -169,9 +180,111 @@ public class RechargeMenu extends AppCompatActivity {
                     case Constants.TITLE_LOGOUT:
                         if(userId > 0)
                         {
-                            eRchargeDB.deleteUserInfo();
-                            Intent intentLogin = new Intent(getBaseContext(), Login.class);
-                            startActivity(intentLogin);
+                            try
+                            {
+                                cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                                netInfo = cm.getActiveNetworkInfo();
+                                if(netInfo == null || !netInfo.isConnected())
+                                {
+                                    Toast.makeText(getApplicationContext(), "Please connect to internet first.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                                final ProgressDialog progressInit = new ProgressDialog(RechargeMenu.this);
+                                progressInit.setTitle("Logout");
+                                progressInit.setMessage("Logging out...");
+                                progressInit.show();
+                                final Thread logoutThread = new Thread() {
+                                    @Override
+                                    public void run()
+                                    {
+                                        try
+                                        {
+                                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                                            StrictMode.setThreadPolicy(policy);
+                                            HttpClient client = new DefaultHttpClient();
+                                            HttpPost post = new HttpPost(baseUrl+Constants.URL_LOGOUT);
+
+                                            List<NameValuePair> nameValuePairs = new ArrayList<>();
+                                            nameValuePairs.add(new BasicNameValuePair("user_id", "" + userId));
+                                            nameValuePairs.add(new BasicNameValuePair("session_id", "" + sessionId));
+
+                                            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                                            HttpResponse response = client.execute(post);
+                                            // Get the response
+                                            BufferedReader rd = new BufferedReader
+                                                    (new InputStreamReader(response.getEntity().getContent()));
+                                            String result = "";
+                                            String line = "";
+                                            while ((line = rd.readLine()) != null) {
+                                                result += line;
+                                            }
+                                            if(result != null) {
+                                                JSONObject resultEvent = new JSONObject(result.toString());
+                                                int responseCode = (int)resultEvent.get("response_code");
+                                                message = (String) resultEvent.get("message");
+                                                if(responseCode == Constants.RESPONSE_CODE_APP_SUCCESS){
+                                                    eRchargeDB.deleteUserInfo();
+                                                    Intent intentLogin = new Intent(getBaseContext(), Login.class);
+                                                    startActivity(intentLogin);
+                                                }
+                                                else if(responseCode == Constants.ERROR_CODE_APP_INVALID_SESSION)
+                                                {
+                                                    progressInit.dismiss();
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            Toast.makeText(getBaseContext(), "Invalid session. Please try again later.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                                else if(responseCode == Constants.ERROR_CODE_APP_LOGOUT_FAILED)
+                                                {
+                                                    progressInit.dismiss();
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            Toast.makeText(getBaseContext(), "Unable to logout. Please try again later.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                                else
+                                                {
+                                                    message = "Invalid response code:"+responseCode;
+                                                    progressInit.dismiss();
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                progressInit.dismiss();
+                                                runOnUiThread(new Runnable() {
+                                                    public void run() {
+                                                        Toast.makeText(getBaseContext(), "Invalid response from the server while verifying login.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        }
+                                        catch(Exception ex)
+                                        {
+                                            message = ex.toString();
+                                            progressInit.dismiss();
+                                            runOnUiThread(new Runnable() {
+                                                public void run() {
+                                                    Toast.makeText(getBaseContext(), "Login error:"+message, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    }
+                                };
+                                logoutThread.start();
+                            }
+                            catch(Exception ex)
+                            {
+                                Toast.makeText(RechargeMenu.this, "System error:"+ex.toString(), Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                         else
                         {

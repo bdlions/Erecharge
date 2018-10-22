@@ -88,17 +88,17 @@ public class Login extends AppCompatActivity {
             //show opcode field
             tvOPCode.setVisibility(View.VISIBLE);
             etOPCode.setVisibility(View.VISIBLE);
-            tvLoginHeader.setText("Recharge V2");
+            tvLoginHeader.setText("Recharge V3");
         }
         else
         {
             if(opCode.length() > 1)
             {
-                tvLoginHeader.setText(opCode.substring(0,1).toUpperCase()+opCode.substring(1)+ " V2");
+                tvLoginHeader.setText(opCode.substring(0,1).toUpperCase()+opCode.substring(1)+ " V3");
             }
             else
             {
-                tvLoginHeader.setText(opCode.toUpperCase()+ " V2");
+                tvLoginHeader.setText(opCode.toUpperCase()+ " V3");
             }
         }
         onClickButtonLoginListener();
@@ -142,7 +142,6 @@ public class Login extends AppCompatActivity {
                             if(responseCode == Constants.RESPONSE_CODE_APP_SUCCESS)
                             {
                                 baseUrl = (String) resultEvent.get("result");
-                                baseUrl = "http://192.168.0.104/rechargeserver/";
                                 if( baseUrl == null || baseUrl.equals(""))
                                 {
                                     progressInit.dismiss();
@@ -427,7 +426,6 @@ public class Login extends AppCompatActivity {
                                             int responseCode = (int)resultEvent.get("responseCode");
                                             if(responseCode == Constants.RESPONSE_CODE_APP_SUCCESS){
                                                 baseUrl = (String) resultEvent.get("result");
-                                                baseUrl = "http://192.168.0.104/rechargeserver/";
                                                 if( baseUrl == null || baseUrl.equals(""))
                                                 {
                                                     progressInit.dismiss();

@@ -69,7 +69,7 @@ public class RechargeMenu extends AppCompatActivity {
             userId = (int) localUserInfo.get("userId");
             baseUrl = (String) localUserInfo.get("baseUrl");
             sessionId = (String) localUserInfo.get("sessionId");
-            companyName.setText((String) localUserInfo.get("companyName"));
+            companyName.setText((String) localUserInfo.get("companyName") + " V4");
             userName.setText((String) localUserInfo.get("userName"));
             currentBalance.setText((double) localUserInfo.get("balance") + "");
             serviceList = eRchargeDB.getAllServices();
@@ -346,10 +346,10 @@ public class RechargeMenu extends AppCompatActivity {
                             if(responseCode == 2000){
                                 try
                                 {
-                                    JSONArray operatorList = resultEvent.getJSONArray("operator_list");
+                                    //JSONArray operatorList = resultEvent.getJSONArray("operator_list");
                                     JSONArray packageList = resultEvent.getJSONArray("package_list");
 
-                                    eRchargeDB.addOperators(operatorList);
+                                    //eRchargeDB.addOperators(operatorList);
                                     eRchargeDB.addPackages(packageList);
 
                                     Intent intentTopUpPackage = new Intent(getBaseContext(), PackageRecharge.class);

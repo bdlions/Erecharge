@@ -88,17 +88,17 @@ public class Login extends AppCompatActivity {
             //show opcode field
             tvOPCode.setVisibility(View.VISIBLE);
             etOPCode.setVisibility(View.VISIBLE);
-            tvLoginHeader.setText("Recharge V3");
+            tvLoginHeader.setText("Recharge V4");
         }
         else
         {
             if(opCode.length() > 1)
             {
-                tvLoginHeader.setText(opCode.substring(0,1).toUpperCase()+opCode.substring(1)+ " V3");
+                tvLoginHeader.setText(opCode.substring(0,1).toUpperCase()+opCode.substring(1)+ " V4");
             }
             else
             {
-                tvLoginHeader.setText(opCode.toUpperCase()+ " V3");
+                tvLoginHeader.setText(opCode.toUpperCase()+ " V4");
             }
         }
         onClickButtonLoginListener();
@@ -475,6 +475,10 @@ public class Login extends AppCompatActivity {
                                                                             int userId =    Integer.parseInt(jsonUserInfo.get("user_id").toString());
                                                                             String sessionId = jsonResultEvent.get("session_id").toString();
                                                                             String companyName = jsonResultEvent.get("company_name").toString();
+
+                                                                            JSONArray operatorList = resultEvent.getJSONArray("operator_list");
+                                                                            databaseHelper.addOperators(operatorList);
+
                                                                             databaseHelper.deleteUserInfo();
                                                                             if(databaseHelper.createUser(userId, etLoginUserName.getText().toString(), etPassword.getText().toString(), "", baseUrl, sessionId, 0, companyName))
                                                                             {

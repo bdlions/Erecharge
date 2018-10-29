@@ -7,13 +7,16 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bdlions.trustedload.bean.OperatorInfo;
 import com.bdlions.trustedload.database.DatabaseHelper;
 
 import org.apache.http.HttpResponse;
@@ -37,6 +40,8 @@ public class TopUp extends AppCompatActivity {
     private static Button buttonTopupSend;
     private static AutoCompleteTextView actvCellNumber;
     private static EditText editTextAmount;
+    Spinner operatorSpiner;
+    OperatorInfo selectedOperatorInfo;
     private static RadioGroup radioGroupTopupPackage;
     private static String message = "";
     private static DatabaseHelper databaseHelper;
@@ -56,6 +61,23 @@ public class TopUp extends AppCompatActivity {
         actvCellNumber.setAdapter(adapterContacts);
 
         editTextAmount = (EditText) findViewById(R.id.etAmountTopUp);
+
+        operatorSpiner = (Spinner) findViewById(R.id.spTopupMobileOperator);
+        ArrayAdapter<OperatorInfo> operatorAdapter = new ArrayAdapter<OperatorInfo>( this, android.R.layout.simple_spinner_item, databaseHelper.getAllOperators());
+        operatorSpiner.setAdapter(operatorAdapter);
+        operatorSpiner.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                        selectedOperatorInfo = (OperatorInfo) operatorSpiner.getSelectedItem();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> arg0) {
+                        // TODO Auto-generated method stub
+                    }
+                }
+        );
 
         try
         {
@@ -121,6 +143,11 @@ public class TopUp extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Invalid amount.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
+                            if(selectedOperatorInfo == null || selectedOperatorInfo.getId() <= 0)
+                            {
+                                Toast.makeText(getApplicationContext(), "Please select an operator", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
                             final ProgressDialog progress = new ProgressDialog(TopUp.this);
                             progress.setTitle("Processing");
@@ -143,6 +170,7 @@ public class TopUp extends AppCompatActivity {
                                         nameValuePairs.add(new BasicNameValuePair("amount", editTextAmount.getText().toString()));
                                         nameValuePairs.add(new BasicNameValuePair("user_id", "" + userId));
                                         nameValuePairs.add(new BasicNameValuePair("session_id", "" + sessionId));
+                                        nameValuePairs.add(new BasicNameValuePair("service_id", "" + selectedOperatorInfo.getId()));
                                         nameValuePairs.add(new BasicNameValuePair("operator_type_id", "" + packageId));
 
                                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));

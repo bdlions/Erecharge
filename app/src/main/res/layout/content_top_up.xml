@@ -5,22 +5,24 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@drawable/background_image"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
     android:baselineAligned="false"
     android:orientation="vertical"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
     android:weightSum="1"
     tools:showIn="@layout/activity_top_up">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
         android:layout_marginBottom="30dp"
+        android:layout_marginTop="60dp"
         android:text="TopUP"
         android:textColor="#fff"
         android:textSize="25dp"
         android:textStyle="normal|bold|italic" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,16 +31,19 @@
         android:text="Enter Mobile Number"
         android:textColor="#fff"
         android:textSize="16dp" />
+
     <AutoCompleteTextView
         android:id="@+id/actvMobileNumberTopUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
+        android:baselineAligned="false"
         android:hint=""
         android:inputType="number"
-        android:textColor="#000"
         android:padding="5dp"
+        android:textColor="#000"
         android:textSize="16dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,51 +52,72 @@
         android:text="Enter Amount"
         android:textColor="#fff"
         android:textSize="16dp" />
+
     <EditText
         android:id="@+id/etAmountTopUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
         android:hint="100"
-        android:textColor="#000"
         android:inputType="number"
         android:padding="5dp"
+        android:textColor="#000"
         android:textSize="16dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="Select Operator"
+        android:textColor="#fff"
+        android:textSize="16dp" />
+    <Spinner
+        android:id="@+id/spTopupMobileOperator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="left"
+        android:background="#FFFFFF"
+        android:padding="5dp"/>
+
     <RadioGroup
         android:id="@+id/radioTypeTopUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/rbPrePaidTopUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10dp"
             android:layout_marginRight="10dp"
-            android:text="PrePaid"
             android:background="#fff"
+            android:checked="true"
+            android:paddingRight="10dp"
+            android:text="PrePaid"
             android:textColor="#333"
-            android:textSize="16dp"
-            android:checked="true" />
+            android:textSize="16dp" />
+
         <RadioButton
             android:id="@+id/rbPostPaidTopUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="PostPaid"
             android:background="#fff"
+            android:paddingRight="10dp"
+            android:text="PostPaid"
             android:textColor="#333"
             android:textSize="16dp" />
     </RadioGroup>
+
     <Button
         android:id="@+id/bSendNowTopUp"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginTop="30dp"
-        android:text="Send Now"
         android:background="#0072C6"
+        android:text="Send Now"
         android:textColor="#fff"
         android:textSize="18dp" />
 </LinearLayout>

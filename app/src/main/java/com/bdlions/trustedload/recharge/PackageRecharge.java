@@ -215,6 +215,7 @@ public class PackageRecharge extends AppCompatActivity {
                                         nameValuePairs.add(new BasicNameValuePair("user_id", "" + userId));
                                         nameValuePairs.add(new BasicNameValuePair("session_id", "" + sessionId));
                                         nameValuePairs.add(new BasicNameValuePair("operator_type_id", "" + packageId));
+                                        nameValuePairs.add(new BasicNameValuePair("service_id", "" + selectedOperatorInfo.getId()));
 
                                         post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                                         HttpResponse response = client.execute(post);

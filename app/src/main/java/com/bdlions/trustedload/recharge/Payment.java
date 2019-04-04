@@ -31,8 +31,8 @@ public class Payment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         databaseHelper = DatabaseHelper.getInstance(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         try
         {
             String paymentTransactionList = getIntent().getExtras().getString("PAYMENT_TRANSACTION_LIST");

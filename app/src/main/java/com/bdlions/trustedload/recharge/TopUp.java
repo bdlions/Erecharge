@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.bdlions.trustedload.bean.OperatorInfo;
 import com.bdlions.trustedload.database.DatabaseHelper;
+import com.bdlions.trustedload.utils.ServiceUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -45,13 +46,14 @@ public class TopUp extends AppCompatActivity {
     private static RadioGroup radioGroupTopupPackage;
     private static String message = "";
     private static DatabaseHelper databaseHelper;
+    private  ArrayList<OperatorInfo> operators = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_up);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         databaseHelper = DatabaseHelper.getInstance(this);
         radioGroupTopupPackage = (RadioGroup) findViewById(R.id.radioTypeTopUp);
 
@@ -59,11 +61,30 @@ public class TopUp extends AppCompatActivity {
         ArrayAdapter<String> adapterContacts = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contactList);
         actvCellNumber = (AutoCompleteTextView) findViewById(R.id.actvMobileNumberTopUp);
         actvCellNumber.setAdapter(adapterContacts);
+        actvCellNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                String cellNumber = actvCellNumber.getText().toString();
+                int serviceId = ServiceUtils.getTopupServiceId(cellNumber);
+                int selection = 0;
+                for(OperatorInfo operatorInfo : operators)
+                {
+                    if(operatorInfo.getId() == serviceId)
+                    {
+                        selectedOperatorInfo = operatorInfo;
+                        operatorSpiner.setSelection(selection);
+                        break;
+                    }
+                    selection++;
+                }
+            }
+        });
 
         editTextAmount = (EditText) findViewById(R.id.etAmountTopUp);
 
+        operators = databaseHelper.getAllOperators();
         operatorSpiner = (Spinner) findViewById(R.id.spTopupMobileOperator);
-        ArrayAdapter<OperatorInfo> operatorAdapter = new ArrayAdapter<OperatorInfo>( this, android.R.layout.simple_spinner_item, databaseHelper.getAllOperators());
+        ArrayAdapter<OperatorInfo> operatorAdapter = new ArrayAdapter<OperatorInfo>( this, android.R.layout.simple_spinner_item, operators);
         operatorSpiner.setAdapter(operatorAdapter);
         operatorSpiner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {

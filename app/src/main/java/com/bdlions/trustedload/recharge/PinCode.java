@@ -41,8 +41,8 @@ public class PinCode extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_code);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         editPinCode = (EditText) findViewById(R.id.etPinCode);
 
         Bundle extras = getIntent().getExtras();
@@ -177,6 +177,7 @@ public class PinCode extends AppCompatActivity {
                                                     Intent intent = new Intent(getBaseContext(), RechargeMenu.class);
                                                     startActivity(intent);
                                                     progress.dismiss();
+                                                    finish();
                                                 }
                                                 catch(Exception ex)
                                                 {

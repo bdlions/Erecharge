@@ -53,8 +53,8 @@ public class RechargeMenu extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge_menu);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         netInfo = cm.getActiveNetworkInfo();
@@ -69,9 +69,9 @@ public class RechargeMenu extends AppCompatActivity {
             userId = (int) localUserInfo.get("userId");
             baseUrl = (String) localUserInfo.get("baseUrl");
             sessionId = (String) localUserInfo.get("sessionId");
-            companyName.setText((String) localUserInfo.get("companyName") + " V4");
+            companyName.setText((String) localUserInfo.get("companyName") + " " + Constants.APP_VERSION);
             userName.setText((String) localUserInfo.get("userName"));
-            currentBalance.setText((double) localUserInfo.get("balance") + "");
+            currentBalance.setText(String.format("%.2f", localUserInfo.get("balance")));
             serviceList = eRchargeDB.getAllServices();
             genarateServiceOptions();
         }
@@ -417,7 +417,8 @@ public class RechargeMenu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.PAGE_DBBL) {
             if(resultCode == Constants.PAGE_DBBL_TRANSACTION_SUCCESS){
-                currentBalance.setText(data.getStringExtra("currentBalance"));
+                //currentBalance.setText(data.getStringExtra("currentBalance"));
+                currentBalance.setText(String.format("%.2f", data.getStringExtra("currentBalance")));
                 Toast.makeText(getApplicationContext(), "Transaction successful.", Toast.LENGTH_SHORT).show();
             }
             else if(resultCode == Constants.PAGE_DBBL_SERVER_UNAVAILABLE){
@@ -435,7 +436,8 @@ public class RechargeMenu extends AppCompatActivity {
 
         else if (requestCode == Constants.PAGE_MCASH) {
             if(resultCode == Constants.PAGE_MCASH_TRANSACTION_SUCCESS){
-                currentBalance.setText(data.getStringExtra("currentBalance"));
+                //currentBalance.setText(data.getStringExtra("currentBalance"));
+                currentBalance.setText(String.format("%.2f", data.getStringExtra("currentBalance")));
                 Toast.makeText(getApplicationContext(), "Transaction successful.", Toast.LENGTH_SHORT).show();
             }
             else if(resultCode == Constants.PAGE_MCASH_SERVER_UNAVAILABLE){
@@ -453,7 +455,8 @@ public class RechargeMenu extends AppCompatActivity {
 
         else if (requestCode == Constants.PAGE_UCASH) {
             if(resultCode == Constants.PAGE_UCASH_TRANSACTION_SUCCESS){
-                currentBalance.setText(data.getStringExtra("currentBalance"));
+                //currentBalance.setText(data.getStringExtra("currentBalance"));
+                currentBalance.setText(String.format("%.2f", data.getStringExtra("currentBalance")));
                 Toast.makeText(getApplicationContext(), "Transaction successful.", Toast.LENGTH_SHORT).show();
             }
             else if(resultCode == Constants.PAGE_UCASH_SERVER_UNAVAILABLE){

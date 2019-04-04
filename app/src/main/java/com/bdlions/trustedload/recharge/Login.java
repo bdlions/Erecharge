@@ -49,8 +49,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         tvLoginHeader = (TextView) findViewById(R.id.tvLoginHeader);
         tvOPCode = (TextView) findViewById(R.id.tvOPCode);
@@ -88,17 +88,17 @@ public class Login extends AppCompatActivity {
             //show opcode field
             tvOPCode.setVisibility(View.VISIBLE);
             etOPCode.setVisibility(View.VISIBLE);
-            tvLoginHeader.setText("Recharge V4");
+            tvLoginHeader.setText("Recharge " + Constants.APP_VERSION);
         }
         else
         {
             if(opCode.length() > 1)
             {
-                tvLoginHeader.setText(opCode.substring(0,1).toUpperCase()+opCode.substring(1)+ " V4");
+                tvLoginHeader.setText(opCode.substring(0,1).toUpperCase()+opCode.substring(1)+ " " + Constants.APP_VERSION);
             }
             else
             {
-                tvLoginHeader.setText(opCode.toUpperCase()+ " V4");
+                tvLoginHeader.setText(opCode.toUpperCase()+ " "+ Constants.APP_VERSION);
             }
         }
         onClickButtonLoginListener();
@@ -244,6 +244,7 @@ public class Login extends AppCompatActivity {
                                                                 databaseHelper.updateBalance(localUserId, currentBalance);
                                                                 startActivity(intent);
                                                                 progressInit.dismiss();
+                                                                finish();
                                                             }
                                                             catch(Exception ex)
                                                             {

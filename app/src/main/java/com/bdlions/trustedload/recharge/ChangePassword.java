@@ -39,8 +39,8 @@ public class ChangePassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         eRechargeDB = DatabaseHelper.getInstance(this);
         editTextPassword = (EditText) findViewById(R.id.etUserNewPassword);
         editTextConfirmPassword = (EditText) findViewById(R.id.etUserConfirmPassword);

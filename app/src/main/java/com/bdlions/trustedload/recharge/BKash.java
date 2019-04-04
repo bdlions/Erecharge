@@ -47,8 +47,8 @@ public class BKash extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_b_kash);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         databaseHelper = DatabaseHelper.getInstance(this);
         radioGroupBKashPackage = (RadioGroup) findViewById(R.id.radioTypebKash);
 
